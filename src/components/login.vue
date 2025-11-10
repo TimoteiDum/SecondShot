@@ -49,13 +49,17 @@
 
           <div class="actions">
             <button type="submit" :disabled="loading">
-              <span v-if="!loading">Sign in</span>
+              <span v-if="!loading">Log In</span>
               <span v-else class="spinner" aria-hidden="true"></span>
             </button>
           </div>
 
           <p class="server-error" v-if="serverError" role="alert">{{ serverError }}</p>
         </form>
+        <p class="signup-link">
+          Don't have an account yet?
+          <a href="/signup">Sign up</a>
+        </p>
       </div>
     </div>
   </div>
@@ -126,8 +130,8 @@ async function submit() {
 
 <style scoped>
 .logo {
-  width: 64px;
-  height: 64px;
+  width: 100px;
+  height: 100px;
   margin-bottom: 1rem;
   object-fit: contain;
 }
@@ -189,7 +193,7 @@ h2 {
 
 .field {
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 .field span {
@@ -279,6 +283,19 @@ button[disabled] {
   margin-top: 12px;
   color: #b91c1c;
   font-size: 0.95rem;
+}
+
+.signup-link {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.98rem;
+  color: #374151;
+}
+.signup-link a {
+  color: #2563eb;
+  text-decoration: underline;
+  margin-left: 4px;
+  cursor: pointer;
 }
 
 @keyframes spin {

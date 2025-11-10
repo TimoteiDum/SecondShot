@@ -12,6 +12,9 @@ node_modules
 dist-ssr
 coverage
 *.local
+.pnp.cjs
+.pnp.loader.mjs
+.yarn
 
 # Editor directories and files
 .vscode/*

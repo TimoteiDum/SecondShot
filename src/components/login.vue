@@ -222,7 +222,7 @@ input[type="text"] {
 button[type="submit"] {
     width: 100%;
     background: #2563eb;
-    
+
     color: white;
     border: none;
     padding: 10px 12px;

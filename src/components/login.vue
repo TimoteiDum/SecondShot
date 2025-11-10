@@ -2,6 +2,7 @@
   <div class="login-page">
     <!-- Left side: welcome text -->
     <div class="left-side">
+      <img src="/logo.png" alt="SecondShot Logo" class="logo" />
       <h1 class="brand">SecondShot</h1>
       <p class="tagline">Your next adventure is just a login away.</p>
     </div>
@@ -124,6 +125,13 @@ async function submit() {
 </script>
 
 <style scoped>
+.logo {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+
 .login-page {
   display: flex;
   min-height: 100vh;

@@ -56,10 +56,11 @@
 
           <p class="server-error" v-if="serverError" role="alert">{{ serverError }}</p>
         </form>
-        <p class="signup-link">
-          Don't have an account yet?
-          <a href="/signup">Sign up</a>
+        <p class="signup-text">
+              Don’t have an account?
+             <a href="/signup">Sign up</a>
         </p>
+
       </div>
     </div>
   </div>
@@ -129,6 +130,23 @@ async function submit() {
 </script>
 
 <style scoped>
+.signup-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.signup-text a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
 .logo {
   width: 100px;
   height: 100px;

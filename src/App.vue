@@ -3,7 +3,7 @@ import Login from './components/login.vue'
 </script>
 
 <template>
-  <h1>Welcome to SecondShot</h1>
+  <Login />
 </template>
 
 <style scoped>

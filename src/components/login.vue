@@ -130,6 +130,21 @@ async function submit() {
 </script>
 
 <style scoped>
+
+.right-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+  /* background image */
+  background-image: url('/login-bg.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+
 .signup-text {
   text-align: center;
   margin-top: 1rem;
@@ -185,21 +200,15 @@ async function submit() {
   max-width: 300px;
 }
 
-.right-side {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
+
 
 .card {
   width: 100%;
-  max-width: 400px;
-  background: white;
+  max-width: 500px;
+  /* background: white; */ /* ← comment this out for testing */
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(30, 40, 60, 0.08);
-  padding: 28px;
+  padding: 48px 36px;
 }
 
 h2 {

@@ -1,5 +1,5 @@
 <script setup>
-import Login from './components/Login.vue'
+import Login from './components/login.vue'
 </script>
 
 <template>
@@ -7,5 +7,5 @@ import Login from './components/Login.vue'
 </template>
 
 <style scoped>
-/* Optional styles for App.vue */
+/* optional app-wide styles */
 </style>

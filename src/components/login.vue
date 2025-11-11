@@ -42,6 +42,9 @@
         </div>
         <p class="server-error" v-if="serverError" role="alert">{{ serverError }}</p>
       </form>
+      <p class="forgot-link">
+            <router-link to="/forgot-password">Forgot password?</router-link>
+      </p>
       <p class="signup-text">
         Don’t have an account?
         <a href="/signup">Sign up</a>
@@ -115,6 +118,17 @@ async function submit() {
 </script>
 
 <style scoped>
+.forgot-link {
+  text-align: right;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+.forgot-link a {
+  color: #2563eb;
+  text-decoration: underline;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
 .card {
   width: 100%;
   max-width: 500px;

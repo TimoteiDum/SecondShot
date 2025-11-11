@@ -1,73 +1,58 @@
 <template>
-  <div class="login-page">
-    <!-- Left side: welcome text -->
-    <div class="left-side">
-      <img src="/logo.png" alt="SecondShot Logo" class="logo" />
-      <h1 class="brand">SecondShot</h1>
-      <p class="tagline">Your next adventure is just a login away.</p>
-    </div>
-
-    <!-- Right side: login card -->
-    <div class="right-side">
-      <div class="card" role="main" aria-labelledby="login-title">
-        <h2 id="login-title">Welcome Back!</h2>
-
-        <form @submit.prevent="submit" novalidate>
-          <label class="field">
-            <span>Email</span>
+  <LoginBackground>
+    <div class="card" role="main" aria-labelledby="login-title">
+      <h2 id="login-title">Welcome Back!</h2>
+      <form @submit.prevent="submit" novalidate>
+        <label class="field">
+          <span>Email</span>
+          <input
+            type="email"
+            v-model.trim="email"
+            :class="{ invalid: errors.email }"
+            required
+            placeholder="you@example.com"
+          />
+          <small class="error" v-if="errors.email">{{ errors.email }}</small>
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <div class="pw-row">
             <input
-              type="email"
-              v-model.trim="email"
-              :class="{ invalid: errors.email }"
+              :type="showPassword ? 'text' : 'password'"
+              v-model="password"
+              :class="{ invalid: errors.password }"
               required
-              placeholder="you@example.com"
+              placeholder="••••••••"
             />
-            <small class="error" v-if="errors.email">{{ errors.email }}</small>
-          </label>
-
-          <label class="field">
-            <span>Password</span>
-            <div class="pw-row">
-              <input
-                :type="showPassword ? 'text' : 'password'"
-                v-model="password"
-                :class="{ invalid: errors.password }"
-                required
-                placeholder="••••••••"
-              />
-              <button type="button" class="toggle" @click="showPassword = !showPassword">
-                {{ showPassword ? 'Hide' : 'Show' }}
-              </button>
-            </div>
-            <small class="error" v-if="errors.password">{{ errors.password }}</small>
-          </label>
-
-          <label class="checkbox">
-            <input type="checkbox" v-model="remember" />
-            <span>Remember me</span>
-          </label>
-
-          <div class="actions">
-            <button type="submit" :disabled="loading">
-              <span v-if="!loading">Log In</span>
-              <span v-else class="spinner" aria-hidden="true"></span>
+            <button type="button" class="toggle" @click="showPassword = !showPassword">
+              {{ showPassword ? 'Hide' : 'Show' }}
             </button>
           </div>
-
-          <p class="server-error" v-if="serverError" role="alert">{{ serverError }}</p>
-        </form>
-        <p class="signup-text">
-              Don’t have an account?
-             <a href="/signup">Sign up</a>
-        </p>
-
-      </div>
+          <small class="error" v-if="errors.password">{{ errors.password }}</small>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" v-model="remember" />
+          <span>Remember me</span>
+        </label>
+        <div class="actions">
+          <button type="submit" :disabled="loading">
+            <span v-if="!loading">Log In</span>
+            <span v-else class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+        <p class="server-error" v-if="serverError" role="alert">{{ serverError }}</p>
+      </form>
+      <p class="signup-text">
+        Don’t have an account?
+        <a href="/signup">Sign up</a>
+      </p>
     </div>
-  </div>
+  </LoginBackground>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
+import LoginBackground from './LoginBackground.vue'
 
 const emit = defineEmits(['login-success'])
 
@@ -130,106 +115,30 @@ async function submit() {
 </script>
 
 <style scoped>
-
-.right-side {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-
-  /* background image */
-  background-image: url('/login-bg.jpeg');
-  background-size: cover;
-  background-position: center;
-}
-
-
-.signup-text {
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  color: #4b5563;
-}
-
-.signup-text a {
-  color: #2563eb;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.signup-text a:hover {
-  text-decoration: underline;
-}
-
-.logo {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 1rem;
-  object-fit: contain;
-}
-
-.login-page {
-  display: flex;
-  min-height: 100vh;
-  background: #f5f7fb;
-}
-
-.left-side {
-  flex: 1;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem;
-  text-align: center;
-  border-right: 1px solid #e5e7eb;
-}
-
-.left-side .brand {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 1rem;
-}
-
-.left-side .tagline {
-  font-size: 1.1rem;
-  color: #4b5563;
-  max-width: 300px;
-}
-
-
-
 .card {
   width: 100%;
   max-width: 500px;
-  /* background: white; */ /* ← comment this out for testing */
+  background: white;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(30, 40, 60, 0.08);
   padding: 48px 36px;
 }
-
 h2 {
   margin: 0 0 16px 0;
   font-size: 1.4rem;
   color: #111827;
   text-align: center;
 }
-
 .field {
   display: block;
   margin-bottom: 15px;
 }
-
 .field span {
   display: block;
   font-size: 0.9rem;
   margin-bottom: 6px;
   color: #374151;
 }
-
 input[type='email'],
 input[type='password'],
 input[type='text'] {
@@ -240,23 +149,19 @@ input[type='text'] {
   font-size: 0.95rem;
   background: #fff;
 }
-
 .invalid {
   border-color: #ef4444;
 }
-
 .error {
   display: block;
   margin-top: 6px;
   color: #ef4444;
   font-size: 0.85rem;
 }
-
 .pw-row {
   display: flex;
   gap: 8px;
 }
-
 .toggle {
   background: #f3f4f6;
   border: none;
@@ -265,7 +170,6 @@ input[type='text'] {
   cursor: pointer;
   color: #374151;
 }
-
 .checkbox {
   display: flex;
   align-items: center;
@@ -274,11 +178,9 @@ input[type='text'] {
   color: #374151;
   font-size: 0.95rem;
 }
-
 .actions {
   margin-top: 8px;
 }
-
 button[type='submit'] {
   width: 100%;
   background: #2563eb;
@@ -289,12 +191,10 @@ button[type='submit'] {
   border-radius: 8px;
   cursor: pointer;
 }
-
 button[disabled] {
   opacity: 0.7;
   cursor: not-allowed;
 }
-
 .spinner {
   display: inline-block;
   width: 16px;
@@ -305,40 +205,23 @@ button[disabled] {
   animation: spin 0.9s linear infinite;
   vertical-align: middle;
 }
-
 .server-error {
   margin-top: 12px;
   color: #b91c1c;
   font-size: 0.95rem;
 }
-
-.signup-link {
-  margin-top: 18px;
+.signup-text {
   text-align: center;
-  font-size: 0.98rem;
-  color: #374151;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #4b5563;
 }
-.signup-link a {
+.signup-text a {
   color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+.signup-text a:hover {
   text-decoration: underline;
-  margin-left: 4px;
-  cursor: pointer;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .login-page {
-    flex-direction: column;
-  }
-  .left-side {
-    border-right: none;
-    border-bottom: 1px solid #e5e7eb;
-  }
 }
 </style>

@@ -120,15 +120,17 @@ async function submit() {
 <style scoped>
 .forgot-link {
   text-align: right;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-top: 8px;
+  font-size: 0.9rem;
 }
 .forgot-link a {
   color: #2563eb;
-  text-decoration: underline;
-  font-size: 0.95rem;
-  cursor: pointer;
+  text-decoration: none;
 }
+.forgot-link a:hover {
+  text-decoration: underline;
+}
+
 .card {
   width: 100%;
   max-width: 500px;

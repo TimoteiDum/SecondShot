@@ -12,8 +12,18 @@
   </div>
 </template>
 
-<style scoped>
+<script setup>
+const emit = defineEmits(['prompt-response'])
 
+function handlePrompt() {
+  const name = window.prompt('What is your name?')
+  if (name) {
+    emit('prompt-response', name)
+  }
+}
+</script>
+
+<style scoped>
 .login-page {
   display: flex;
   min-height: 100vh;
@@ -21,7 +31,7 @@
 }
 .left-side {
   flex: 1;
-  background: #f1f0f2;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,6 +56,16 @@
   height: 100px;
   margin-bottom: 1rem;
   object-fit: contain;
+}
+.prompt-btn {
+  margin-top: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 .right-side {
   flex: 1;

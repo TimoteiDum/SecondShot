@@ -7,25 +7,10 @@
         Enter your email address below and we'll send you a link to reset your password.
       </p>
       <form @submit.prevent="submit">
-        <label class="flex flex-col items-center mb-8 text-center w-full">
-          <span class="mb-2 text-base text-gray-700">Email address</span>
-          <div class="relative w-4/5 flex items-center justify-center">
-            <input
-              type="email"
-              v-model="email"
-              :class="[
-                'w-full pl-9 py-2 rounded border text-center mb-2',
-                emailError ? 'border-red-500' : 'border-gray-300'
-              ]"
-              required
-              placeholder="you@example.com"
-              @input="emailError = ''"
-            />
-            <!-- Uncomment below if you want an icon inside the input -->
-            <!-- <i class="bi bi-envelope absolute left-3 text-blue-600 text-lg pointer-events-none"></i> -->
-          </div>
+        <div class="mb-8">
+          <EmailInput v-model="email" />
           <small v-if="emailError" class="text-red-500 text-sm mt-1">{{ emailError }}</small>
-        </label>
+        </div>
         <div class="mt-3">
           <button
             type="submit"
@@ -48,6 +33,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import EmailInput from '@/components/EmailInput.vue'
 
 const router = useRouter()
 const email = ref('')

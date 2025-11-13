@@ -8,13 +8,17 @@ import ConfirmPasswordInput from '@/components/ConfirmPasswordInput.vue'
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import AlertMessage from '@/components/AlertMessage.vue'
 import IconButton from '@/components/IconButton.vue'
+import CheckboxInput from '@/components/CheckboxInput.vue'
+import PasswordStrengthMeter from '@/components/PasswordStrengthMeter.vue'
 
 const router = useRouter()
+const emit = defineEmits(['signupSuccess'])
 
 const fullName = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const agreed = ref(false)
 
 const showAlert = ref(false)
 const alertMessage = ref('')
@@ -25,14 +29,19 @@ function handleSignup() {
     showAlert.value = true
     return
   }
+  if (!agreed.value) {
+    alertMessage.value = 'You must agree to the Terms of Service and Privacy Policy.'
+    showAlert.value = true
+    return
+  }
   alertMessage.value = 'Account created!'
   showAlert.value = true
+  emit('signupSuccess', { fullName: fullName.value, email: email.value })
 }
 </script>
 
 <template>
   <div class="signup-page flex justify-center items-center min-h-screen">
-    <!-- Home Icon Button -->
     <IconButton
       icon="bi bi-house"
       aria-label="Home"
@@ -45,9 +54,12 @@ function handleSignup() {
       <form @submit.prevent="handleSignup" class="flex flex-col gap-5">
         <NameInput v-model="fullName" />
         <EmailInput v-model="email" />
-        <PasswordInput v-model="password" />
+        <div>
+          <PasswordInput v-model="password" />
+          <PasswordStrengthMeter :password="password" />
+        </div>
         <ConfirmPasswordInput v-model="confirmPassword" />
-
+        <CheckboxInput v-model="agreed" />
         <ButtonComponent type="submit" customClass="mt-2">
           Create an account
         </ButtonComponent>

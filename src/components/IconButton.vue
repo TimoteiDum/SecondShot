@@ -16,7 +16,7 @@
 
 <script setup>
 defineProps({
-  icon: { type: String, required: true }, // e.g. 'bi bi-person'
+  icon: { type: String, required: true }, 
   type: { type: String, default: 'button' },
   ariaLabel: { type: String, default: '' },
   customClass: { type: String, default: '' }

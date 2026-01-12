@@ -1,7 +1,6 @@
 <template>
   <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-8 relative">
-      <!-- Alert Message -->
       <AlertMessage
         :show="showAlert"
         :message="alertMessage"
@@ -72,8 +71,7 @@ function handleLogin() {
     showAlert.value = true
     return
   }
-  // Add your real login logic here
-  // emit('close')
+  
 }
 function goToJoin() {
   emit('close')

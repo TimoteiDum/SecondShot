@@ -1,11 +1,8 @@
 <template>
   <div class="home-page relative min-h-screen w-full flex">
-    <!-- Sidebar Menu (hidden by default, toggled by button) -->
     <SidebarMenu :show="showSidebar" @close="showSidebar = false" />
 
-    <!-- Main content area -->
     <div class="flex-1 relative">
-      <!-- Top Navigation Bar -->
       <TopNavBar
         :search="search"
         @update:search="search = $event"
@@ -13,10 +10,8 @@
         @open-login="openLogin"
       />
 
-      <!-- Background overlay -->
       <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
 
-      <!-- Centered content -->
       <div class="relative z-20 flex flex-col items-center justify-start min-h-screen pt-24">
         <h1 class="baskerville text-5xl text-white font-semibold text-center tracking-widest mb-4">
           {{ welcomeMessage }}
@@ -27,7 +22,6 @@
             text="Quality Used Cameras & Photo Gear"
             class="mb-8"
           />
-          <!-- Increased gap between buttons -->
           <div class="flex gap-130 mt-20">
             <button
               class="bg-gray-600 hover:bg-gray-400 text-white font-bold py-4 px-10 rounded-xl shadow-lg text-xl transition duration-200 ease-in-out transform hover:scale-105"

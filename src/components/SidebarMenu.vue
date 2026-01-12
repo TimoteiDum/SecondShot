@@ -1,4 +1,3 @@
-<!-- filepath: /Users/timoteidumbraveanu/Documents/universitate/SecondShot/src/components/SidebarMenu.vue -->
 <template>
   <transition name="fade">
     <aside
@@ -19,14 +18,12 @@
                 Home
               </router-link>
             </li>
-            <!-- Remove Login and Signup links -->
           </ul>
         </nav>
         <div class="px-6 py-4 border-t border-gray-700 text-sm text-gray-400">
           <slot name="footer">© 2025 SecondShot</slot>
         </div>
       </div>
-      <!-- Optional: overlay for click outside -->
       <div class="flex-1 bg-black/40" @click="$emit('close')"></div>
     </aside>
   </transition>

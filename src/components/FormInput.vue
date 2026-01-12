@@ -1,4 +1,3 @@
-<!-- components/FormInput.vue -->
 <template>
   <div class="text-left">
     <label :for="id" class="text-gray-700 font-medium">{{ label }}</label>

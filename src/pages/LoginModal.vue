@@ -72,7 +72,15 @@ function handleLogin() {
     showAlert.value = true
     return
   }
-  
+  // Simulate successful login: store a minimal user record and navigate home
+  const user = { email: email.value }
+  try {
+    localStorage.setItem('user', JSON.stringify(user))
+  } catch (e) {
+    // ignore localStorage errors in restricted environments
+  }
+  emit('close')
+  router.push('/')
 }
 const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
 const isLoginDisabled = computed(() => !(isEmailValid.value && password.value.length >= 6))

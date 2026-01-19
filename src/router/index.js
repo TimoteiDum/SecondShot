@@ -6,6 +6,7 @@ import PasswordResetSent from '../pages/PasswordResetSent.vue'
 import Signup from '../pages/Signup.vue'
 import Terms from '../pages/Terms.vue'
 import Privacy from '../pages/Privacy.vue'
+import YourProfile from '../pages/YourProfile.vue'
 
 const routes = [
   { path: '/', component: HomePage },
@@ -15,6 +16,7 @@ const routes = [
   { path: '/signup', component: Signup }
   ,{ path: '/terms', component: Terms }
   ,{ path: '/privacy', component: Privacy }
+  ,{ path: '/profile', component: YourProfile }
 ]
 
 const router = createRouter({

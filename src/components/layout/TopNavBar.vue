@@ -13,12 +13,18 @@
       </router-link>
         <SearchBar v-model="trimmedSearch" placeholder="Search products..." class="max-w-5xl w-full" />
     </div>
-    <button
-      @click="$emit('open-login')"
-      class="w-12 h-12 rounded-full bg-gray-500 text-gray-800 flex items-center justify-center text-2xl shadow hover:bg-gray-300 transition"
-    >
-      <i class="bi bi-person"></i>
-    </button>
+    <div>
+      <router-link v-if="isAuthenticated" to="/profile" class="w-12 h-12 inline-flex rounded-full bg-gray-500 text-gray-800 items-center justify-center text-2xl shadow hover:bg-gray-300 transition">
+        <i class="bi bi-person"></i>
+      </router-link>
+      <button
+        v-else
+        @click="$emit('open-login')"
+        class="w-12 h-12 rounded-full bg-gray-500 text-gray-800 flex items-center justify-center text-2xl shadow hover:bg-gray-300 transition"
+      >
+        <i class="bi bi-person"></i>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -27,11 +33,13 @@ import { ref, watch, computed } from 'vue'
 import SearchBar from '@/components/inputs/SearchBar.vue'
 
 const props = defineProps({
-  search: String
+  search: String,
+  isAuthenticated: { type: Boolean, default: false }
 })
 const emit = defineEmits(['update:search', 'open-menu', 'open-login'])
 
 const search = ref(props.search || '')
+const isAuthenticated = props.isAuthenticated
 
 const trimmedSearch = computed({
   get: () => search.value,

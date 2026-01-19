@@ -5,6 +5,7 @@
     <div class="flex-1 relative">
       <TopNavBar
         :search="search"
+        :is-authenticated="isAuthenticated"
         @update:search="search = $event"
         @open-menu="showSidebar = true"
         @open-login="openLogin"
@@ -63,6 +64,7 @@ const emit = defineEmits(['buy', 'sell'])
 const showLogin = ref(false)
 const showSidebar = ref(false)
 const search = ref('')
+const isAuthenticated = ref(!!localStorage.getItem('user'))
 
 const welcomeComputed = computed(() => {
   if (search.value && search.value.trim().length > 0) return `Searching: ${search.value}`
@@ -74,6 +76,8 @@ function openLogin() {
 }
 function closeLogin() {
   showLogin.value = false
+  // refresh auth state after modal closes (login may have set localStorage)
+  isAuthenticated.value = !!localStorage.getItem('user')
 }
 
 import { useRouter } from 'vue-router'

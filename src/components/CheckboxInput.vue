@@ -10,9 +10,9 @@
     />
     <label for="terms" class="text-xs text-gray-700 select-none">
       I agree to the
-      <a href="#" class="text-blue-600 underline">Terms of Service</a>
+      <router-link to="/terms" class="text-blue-600 underline">Terms of Service</router-link>
       and
-      <a href="#" class="text-blue-600 underline">Privacy Policy</a>.
+      <router-link to="/privacy" class="text-blue-600 underline">Privacy Policy</router-link>.
     </label>
   </div>
 </template>

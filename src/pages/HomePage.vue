@@ -71,10 +71,17 @@ function closeLogin() {
   showLogin.value = false
 }
 
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 function handleBuy() {
+  // navigate to signup to encourage users to sign up before buying
+  router.push('/signup')
   emit('buy')
 }
 function handleSell() {
+  // navigate to signup to encourage users to sign up before selling
+  router.push('/signup')
   emit('sell')
 }
 </script>

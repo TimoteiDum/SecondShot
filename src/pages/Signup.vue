@@ -37,6 +37,8 @@ function handleSignup() {
   alertMessage.value = 'Account created!'
   showAlert.value = true
   emit('signupSuccess', { fullName: fullName.value, email: email.value })
+  // after successful signup navigate to login
+  router.push('/login')
 }
 </script>
 

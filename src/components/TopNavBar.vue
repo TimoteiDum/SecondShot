@@ -8,7 +8,9 @@
       <i class="bi bi-list"></i>
     </button>
     <div class="flex-1 flex justify-center items-center gap-4">
-      <img src="/logo1.png" alt="Logo" class="h-16 w-auto" />
+      <router-link to="/" class="flex items-center">
+        <img src="/logo1.png" alt="Logo" class="h-16 w-auto" />
+      </router-link>
       <SearchBar v-model="search" placeholder="Search products..." class="max-w-5xl w-full" />
     </div>
     <button

@@ -13,8 +13,9 @@
         </div>
         <div class="mt-3">
           <button
+            :disabled="!isEmailValid"
             type="submit"
-            class="w-4/5 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-800 transition mb-8"
+            class="w-4/5 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-800 transition mb-8 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Send Reset Link
           </button>
@@ -31,13 +32,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import EmailInput from '@/components/inputs/EmailInput.vue'
 
 const router = useRouter()
 const email = ref('')
 const emailError = ref('')
+
+const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
 
 function validateEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)

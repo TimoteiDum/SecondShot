@@ -17,8 +17,9 @@
         <EmailInput v-model="email" />
         <PasswordInput v-model="password" />
         <button
+          :disabled="isLoginDisabled"
           type="submit"
-          class="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-800 transition"
+          class="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Log In
         </button>
@@ -42,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import EmailInput from '@/components/inputs/EmailInput.vue'
 import PasswordInput from '@/components/inputs/PasswordInput.vue'
@@ -73,6 +74,8 @@ function handleLogin() {
   }
   
 }
+const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
+const isLoginDisabled = computed(() => !(isEmailValid.value && password.value.length >= 6))
 function goToJoin() {
   emit('close')
   router.push('/signup')

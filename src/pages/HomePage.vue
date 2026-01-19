@@ -14,8 +14,8 @@
 
       <div class="relative z-20 flex flex-col items-center justify-start min-h-screen pt-24">
         <h1 class="baskerville text-5xl text-white font-semibold text-center tracking-widest mb-4">
-          {{ welcomeMessage }}
-        </h1>
+                {{ welcomeComputed }}
+              </h1>
         <div class="flex flex-col items-center mt-40">
           <LabelText
             label="Buy, sell or trade"
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import LoginModal from '../pages/LoginModal.vue'
 import LabelText from '@/components/layout/LabelText.vue'
 import SidebarMenu from '@/components/layout/SidebarMenu.vue'
@@ -63,6 +63,11 @@ const emit = defineEmits(['buy', 'sell'])
 const showLogin = ref(false)
 const showSidebar = ref(false)
 const search = ref('')
+
+const welcomeComputed = computed(() => {
+  if (search.value && search.value.trim().length > 0) return `Searching: ${search.value}`
+  return props.welcomeMessage || 'Welcome to SecondShot'
+})
 
 function openLogin() {
   showLogin.value = true

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import NameInput from '@/components/inputs/NameInput.vue'
 import EmailInput from '@/components/inputs/EmailInput.vue'
@@ -40,6 +40,17 @@ function handleSignup() {
   // after successful signup navigate to login
   router.push('/login')
 }
+
+// Computed validations
+const passwordsMatch = computed(() => password.value === confirmPassword.value)
+const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
+const isFormValid = computed(() =>
+  fullName.value.trim().length >= 3 &&
+  isEmailValid.value &&
+  password.value.length >= 6 &&
+  passwordsMatch.value &&
+  agreed.value
+)
 </script>
 
 <template>
@@ -62,9 +73,10 @@ function handleSignup() {
         </div>
         <ConfirmPasswordInput v-model="confirmPassword" />
         <CheckboxInput v-model="agreed" />
-        <ButtonComponent type="submit" customClass="mt-2">
+        <ButtonComponent :disabled="!isFormValid" type="submit" customClass="mt-2">
           Create an account
         </ButtonComponent>
+        <small v-if="!passwordsMatch && (password.length || confirmPassword.length)" class="text-red-500 text-sm mt-1">Passwords do not match</small>
       </form>
     </div>
   </div>

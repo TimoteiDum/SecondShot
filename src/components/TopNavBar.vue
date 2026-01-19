@@ -11,7 +11,7 @@
       <router-link to="/" class="flex items-center">
         <img src="/logo1.png" alt="Logo" class="h-16 w-auto" />
       </router-link>
-        <SearchBar v-model="trimmedSearch" placeholder="Search products..." class="max-w-5xl w-full" />
+      <SearchBar v-model="search" placeholder="Search products..." class="max-w-5xl w-full" />
     </div>
     <button
       @click="$emit('open-login')"
@@ -23,8 +23,8 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
-import SearchBar from '@/components/inputs/SearchBar.vue'
+import { ref, watch } from 'vue'
+import SearchBar from '@/components/SearchBar.vue'
 
 const props = defineProps({
   search: String
@@ -32,11 +32,6 @@ const props = defineProps({
 const emit = defineEmits(['update:search', 'open-menu', 'open-login'])
 
 const search = ref(props.search || '')
-
-const trimmedSearch = computed({
-  get: () => search.value,
-  set: v => { search.value = v.trimStart() }
-})
 
 watch(search, value => emit('update:search', value))
 </script>

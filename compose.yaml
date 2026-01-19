@@ -1,6 +1,8 @@
 services:
   app:
-    build: .docker
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
     stdin_open: true
     tty: true
     environment:
@@ -10,7 +12,15 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - .:/app
+      # Disabled host bind-mount to avoid macOS I/O issues with esbuild.
+      # If you need live code edits, consider using docker-sync / Mutagen or
+      # an override compose file for dev that enables the bind mount.
+      # - .:/app
       - /app/.git/  # exclude
+      # Temporarily disable named volume so the image's node_modules are used
+      # - node_modules:/app/node_modules
     working_dir: /app
-    user: 1000:1000
+    # running as the default user inside the image avoids host/uid permission mismatches
+    # user: 1000:1000
+#volumes:
+#  node_modules:

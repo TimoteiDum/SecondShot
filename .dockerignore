@@ -1,0 +1,38 @@
+# Ignore node modules (installed inside the image or in a named volume)
+node_modules
+
+# Git metadata
+.git
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# macOS
+.DS_Store
+
+# Environment files (don't keep secrets in the image)
+.env
+.env.*.local
+
+# Build outputs / caches
+dist
+.cache
+.parcel-cache
+.vite
+coverage
+build
+
+# Editor and OS folders
+.vscode
+.idea
+Thumbs.db
+
+# Temporary
+tmp
+temp
+
+# Note: Do NOT ignore the .docker directory because the Dockerfile lives there
+# and needs to be included in the build context (we use 'dockerfile: .docker/Dockerfile').

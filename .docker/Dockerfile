@@ -10,7 +10,7 @@ COPY package.json yarn.lock .yarnrc.yml ./
 # Enable Corepack and Yarn stable
 RUN corepack enable && corepack prepare yarn@stable --activate
 
-# Install dependencies in container
+# Install dependencies inside container
 RUN yarn install --frozen-lockfile --network-timeout 600000
 
 # Copy the rest of the project
@@ -19,5 +19,5 @@ COPY . .
 # Expose dev server port
 EXPOSE 5173
 
-# Start dev server
+# Start dev server on all interfaces
 CMD ["yarn", "dev"]

@@ -1,9 +1,5 @@
 <template>
   <router-view />
-
-
 </template>
 
-<style scoped>
-@import "tailwindcss";
-</style>
+<!-- Tailwind is loaded globally from src/main.css (imported in src/main.js) -->

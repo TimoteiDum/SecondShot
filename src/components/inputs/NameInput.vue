@@ -1,12 +1,12 @@
 <template>
   <div>
-    <label for="confirmPassword" class="block text-left text-gray-700 font-medium mb-1">Confirm Password:</label>
+    <label for="fullName" class="block text-left text-gray-700 font-medium mb-1">Full Name:</label>
     <input
-      id="confirmPassword"
-      type="password"
+      id="fullName"
+      type="text"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      placeholder="Confirm Password"
+      placeholder="Full Name"
       class="border rounded w-full px-3 py-2"
       required
     />

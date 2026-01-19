@@ -25,9 +25,9 @@
 </template>
 
 <script setup>
-import ButtonComponent from '@/components/ButtonComponent.vue'
-import CardComponent from '@/components/CardComponent.vue'
-import LabelText from '@/components/LabelText.vue'
+import ButtonComponent from '@/components/buttons/ButtonComponent.vue'
+import CardComponent from '@/components/layout/CardComponent.vue'
+import LabelText from '@/components/layout/LabelText.vue'
 import { useRouter } from 'vue-router'
 
 const emit = defineEmits(['back'])

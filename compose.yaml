@@ -10,8 +10,6 @@ services:
       CHOKIDAR_USEPOLLING: true
       CHOKIDAR_INTERVAL: 100
     ports:
-      # Map host 5174 to container 5173 so you can use the same link
-      # that your local `yarn dev` shows (http://localhost:5174)
       - "5174:5173"
     volumes:
       - .:/app:cached

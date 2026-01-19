@@ -1,12 +1,12 @@
 <template>
   <div>
-    <label for="password" class="block text-left text-gray-700 font-medium mb-1">Password:</label>
+    <label for="email" class="block text-left text-gray-700 font-medium mb-1">Email Address:</label>
     <input
-      id="password"
-      type="password"
+      id="email"
+      type="email"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      placeholder="Password"
+      placeholder="Email"
       class="border rounded w-full px-3 py-2"
       required
     />

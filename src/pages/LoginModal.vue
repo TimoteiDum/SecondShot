@@ -44,9 +44,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import EmailInput from '@/components/EmailInput.vue'
-import PasswordInput from '@/components/PasswordInput.vue'
-import AlertMessage from '@/components/AlertMessage.vue'
+import EmailInput from '@/components/inputs/EmailInput.vue'
+import PasswordInput from '@/components/inputs/PasswordInput.vue'
+import AlertMessage from '@/components/feedback/AlertMessage.vue'
 
 const router = useRouter()
 const emit = defineEmits(['close'])

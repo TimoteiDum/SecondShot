@@ -33,7 +33,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import EmailInput from '@/components/EmailInput.vue'
+import EmailInput from '@/components/inputs/EmailInput.vue'
 
 const router = useRouter()
 const email = ref('')

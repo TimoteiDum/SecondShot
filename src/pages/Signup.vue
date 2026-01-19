@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import NameInput from '@/components/NameInput.vue'
-import EmailInput from '@/components/EmailInput.vue'
-import PasswordInput from '@/components/PasswordInput.vue'
-import ConfirmPasswordInput from '@/components/ConfirmPasswordInput.vue'
-import ButtonComponent from '@/components/ButtonComponent.vue'
-import AlertMessage from '@/components/AlertMessage.vue'
-import IconButton from '@/components/IconButton.vue'
-import CheckboxInput from '@/components/CheckboxInput.vue'
-import PasswordStrengthMeter from '@/components/PasswordStrengthMeter.vue'
+import NameInput from '@/components/inputs/NameInput.vue'
+import EmailInput from '@/components/inputs/EmailInput.vue'
+import PasswordInput from '@/components/inputs/PasswordInput.vue'
+import ConfirmPasswordInput from '@/components/inputs/ConfirmPasswordInput.vue'
+import ButtonComponent from '@/components/buttons/ButtonComponent.vue'
+import AlertMessage from '@/components/feedback/AlertMessage.vue'
+import IconButton from '@/components/buttons/IconButton.vue'
+import CheckboxInput from '@/components/inputs/CheckboxInput.vue'
+import PasswordStrengthMeter from '@/components/feedback/PasswordStrengthMeter.vue'
 
 const router = useRouter()
 const emit = defineEmits(['signupSuccess'])

@@ -47,9 +47,9 @@
 <script setup>
 import { ref } from 'vue'
 import LoginModal from '../pages/LoginModal.vue'
-import LabelText from '@/components/LabelText.vue'
-import SidebarMenu from '@/components/SidebarMenu.vue'
-import TopNavBar from '@/components/TopNavBar.vue'
+import LabelText from '@/components/layout/LabelText.vue'
+import SidebarMenu from '@/components/layout/SidebarMenu.vue'
+import TopNavBar from '@/components/layout/TopNavBar.vue'
 
 const props = defineProps({
   welcomeMessage: {

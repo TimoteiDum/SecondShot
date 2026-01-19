@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import SearchBar from '@/components/SearchBar.vue'
+import SearchBar from '@/components/inputs/SearchBar.vue'
 
 const props = defineProps({
   search: String

@@ -1,15 +1,18 @@
 <template>
+  <!-- top navigation component (fixed) -->
+  <TopNavBar :isAuthenticated="isAuthenticated" @open-login="openLogin" @open-menu="toggleSidebar" />
+  <SidebarMenu :show="ui.showSidebar" @close="toggleSidebar" />
   <!-- Background image with dark overlay to make cards stand out -->
   <div class="min-h-screen pt-24 px-6 bg-cover bg-center relative" style="background-image: url('/camera.jpg')">
     <div class="absolute inset-0 bg-black/60"></div>
-
-  <div class="relative z-10 flex flex-col items-center justify-center text-center text-white py-50 min-h-[70vh]">
-      <div class="max-w-3xl w-full px-4">
-        <h1 class="text-4xl font-bold mb-3">Welcome to SecondShot</h1>
-        <p class="text-gray-200 mb-12">Shop by category</p>
+  <div class="relative z-10 flex flex-col items-center text-center text-white pt-16 pb-28 min-h-[55vh]">
+      <div class="max-w-5xl w-full px-6">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-12 leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 drop-shadow-lg whitespace-nowrap">
+          Shop by category
+        </h1>
 
         <!-- 2x2 centered grid with larger gaps -->
-  <div class="mx-auto w-full max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-y-24 gap-x-12 mt-12">
+  <div class="mx-auto w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-y-16 gap-x-8 mt-8">
           <div class="flex justify-center">
             <CategoryCard title="Cameras" subtitle="DSLR, mirrorless & compact" :to="'/shop/cameras'" iconClass="bi bi-camera" />
           </div>
@@ -26,8 +29,28 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import CategoryCard from '@/components/layout/CategoryCard.vue'
+import TopNavBar from '@/components/layout/TopNavBar.vue'
+import SidebarMenu from '@/components/layout/SidebarMenu.vue'
+import { useAuthStore } from '@/stores/auth'
+import { useUIStore } from '@/stores/ui'
+
+const auth = useAuthStore()
+const ui = useUIStore()
+
+const isAuthenticated = computed(() => auth.isAuthenticated)
+
+function openLogin() {
+  // prefer UI action which opens the global login modal if present
+  if (ui && ui.openLogin) ui.openLogin()
+}
+
+function toggleSidebar() {
+  if (ui && ui.toggleSidebar) ui.toggleSidebar()
+}
 </script>

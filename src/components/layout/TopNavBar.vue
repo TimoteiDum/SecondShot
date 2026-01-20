@@ -1,43 +1,63 @@
 <template>
-  <div class="w-full bg-black py-3 px-8 flex items-center justify-between z-50">
-    <button
-      @click="$emit('open-menu')"
-      class="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center text-3xl shadow hover:bg-gray-700 transition"
-      aria-label="Open menu"
+  <header class="w-full fixed top-0 left-0 right-0 z-50">
+    <!-- full-bleed translucent panel -->
+    <div
+      class="w-full bg-gradient-to-r from-white/12 via-white/10 to-white/8 border-b border-white/10 shadow-2xl relative"
+      style="-webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); background-color: rgba(255,255,255,0.06);"
     >
-      <i class="bi bi-list"></i>
-    </button>
-    <div class="flex-1 flex justify-center items-center gap-4">
-      <router-link to="/" class="flex items-center">
-        <img src="/logo1.png" alt="Logo" class="h-16 w-auto" />
-      </router-link>
-        <SearchBar v-model="trimmedSearch" placeholder="Search products..." class="max-w-5xl w-full" />
-    </div>
-    <div class="flex items-center gap-3">
-  <!-- big SearchBar is in the center; remove duplicate here -->
-  <!-- Cart button with badge -->
-      <router-link to="/cart" class="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
-        <div class="w-9 h-9 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-700">
-          <!-- simple cart icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 7h14l-2-7M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
-          </svg>
-        </div>
-        <span v-if="totalItems > 0" class="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">{{ totalItems }}</span>
-      </router-link>
+      <!-- left control (edge) -->
+      <div class="absolute left-6 top-1/2 -translate-y-1/2 z-30">
+        <button
+          @click="$emit('open-menu')"
+          class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center text-3xl shadow hover:shadow-md hover:bg-white/20 transition-transform duration-200 transform"
+          aria-label="Open menu"
+        >
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
 
-      <router-link v-if="isAuthenticated" to="/profile" class="w-12 h-12 inline-flex rounded-full bg-gray-500 text-gray-800 items-center justify-center text-2xl shadow hover:bg-gray-300 transition">
-        <i class="bi bi-person"></i>
-      </router-link>
-      <button
-        v-else
-        @click="$emit('open-login')"
-        class="w-12 h-12 rounded-full bg-gray-500 text-gray-800 flex items-center justify-center text-2xl shadow hover:bg-gray-300 transition"
-      >
-        <i class="bi bi-person"></i>
-      </button>
+      <!-- right controls (edge) -->
+      <div class="absolute right-6 top-1/2 -translate-y-1/2 z-30 flex items-center gap-3">
+        <router-link to="/cart" class="relative flex items-center justify-center w-14 h-14 rounded-full hover:shadow-lg transition">
+          <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-800 shadow-sm ring-1 ring-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 7h14l-2-7M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
+            </svg>
+          </div>
+          <span v-if="totalItems > 0" class="absolute -top-1 -right-1 bg-red-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center">{{ totalItems }}</span>
+        </router-link>
+
+        <router-link v-if="isAuthenticated" to="/profile" class="w-12 h-12 inline-flex rounded-full bg-white/10 text-white items-center justify-center text-3xl shadow hover:shadow-md transition">
+          <i class="bi bi-person"></i>
+        </router-link>
+
+        <button
+          v-else
+          @click="$emit('open-login')"
+          class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center text-3xl shadow hover:shadow-md transition"
+        >
+          <i class="bi bi-person"></i>
+        </button>
+      </div>
+
+      <!-- centered content inside full-bleed panel -->
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="flex items-center justify-center px-4 py-2">
+          <div class="flex-1 flex items-center justify-center px-6">
+            <router-link to="/" class="flex items-center mr-6">
+              <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+                <img src="/logo1.png" alt="Logo" class="h-10 w-10 object-cover rounded-full" />
+              </div>
+            </router-link>
+
+            <div class="flex-1 max-w-4xl">
+              <SearchBar v-model="trimmedSearch" placeholder="Search products..." class="w-full" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script setup>

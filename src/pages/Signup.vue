@@ -37,8 +37,8 @@ function handleSignup() {
   alertMessage.value = 'Account created!'
   showAlert.value = true
   emit('signupSuccess', { fullName: fullName.value, email: email.value })
-  // after successful signup navigate to login
-  router.push('/login')
+  // after successful signup navigate home and open the login modal
+  router.push({ path: '/', query: { openLogin: '1' } })
 }
 
 // Computed validations

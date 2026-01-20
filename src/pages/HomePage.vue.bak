@@ -54,7 +54,6 @@ import Modal from '@/components/layout/Modal.vue'
 import LabelText from '@/components/layout/LabelText.vue'
 import SidebarMenu from '@/components/layout/SidebarMenu.vue'
 import TopNavBar from '@/components/layout/TopNavBar.vue'
-import { useAuthStore } from '@/stores/auth'
 
 const props = defineProps({
   welcomeMessage: {
@@ -68,8 +67,7 @@ const emit = defineEmits(['buy', 'sell'])
 const showLogin = ref(false)
 const showSidebar = ref(false)
 const search = ref('')
-const auth = useAuthStore()
-const isAuthenticated = computed(() => auth.isAuthenticated)
+const isAuthenticated = ref(!!localStorage.getItem('user'))
 
 const welcomeComputed = computed(() => {
   // Always show the welcome message; do not echo the search term in the heading
@@ -81,8 +79,8 @@ function openLogin() {
 }
 function closeLogin() {
   showLogin.value = false
-  // ensure auth store is loaded from storage (login writes through auth store)
-  auth.loadFromStorage()
+  // refresh auth state after modal closes (login may have set localStorage)
+  isAuthenticated.value = !!localStorage.getItem('user')
 }
 
 import { useRouter, useRoute } from 'vue-router'
@@ -122,8 +120,7 @@ watch(() => route.query.openLogin, (open) => {
 // React to auth changes made in other tabs/windows and keep isAuthenticated reactive
 storageHandler = (e) => {
   if (e.key === 'user') {
-    // reload auth info in other tabs
-    auth.loadFromStorage()
+    isAuthenticated.value = !!e.newValue
   }
 }
 window.addEventListener('storage', storageHandler)

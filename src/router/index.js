@@ -1,22 +1,40 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../pages/HomePage.vue'
-import Login from '../pages/LoginModal.vue'
+import Login from '../pages/LoginPage.vue'
 import ForgotPassword from '../pages/ForgotPassword.vue'
 import PasswordResetSent from '../pages/PasswordResetSent.vue'
 import Signup from '../pages/Signup.vue'
 import Terms from '../pages/Terms.vue'
 import Privacy from '../pages/Privacy.vue'
+import Cart from '@/pages/Cart.vue'
 import YourProfile from '../pages/YourProfile.vue'
+import Shop from '../pages/Shop.vue'
+import Cameras from '../pages/shop/Cameras.vue'
+import VideoCameras from '../pages/shop/VideoCameras.vue'
+import Lenses from '../pages/shop/Lenses.vue'
+import Accessories from '../pages/shop/Accessories.vue'
+import AccountDetails from '../pages/AccountDetails.vue'
 
 const routes = [
   { path: '/', component: HomePage },
   { path: '/login', component: Login },
   { path: '/forgot-password', component: ForgotPassword },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: Cart,
+  },
   { path: '/reset-sent', component: PasswordResetSent },
   { path: '/signup', component: Signup }
   ,{ path: '/terms', component: Terms }
   ,{ path: '/privacy', component: Privacy }
   ,{ path: '/profile', component: YourProfile }
+  ,{ path: '/shop', component: Shop }
+  ,{ path: '/shop/cameras', component: Cameras }
+  ,{ path: '/shop/videocameras', component: VideoCameras }
+  ,{ path: '/shop/lenses', component: Lenses }
+  ,{ path: '/shop/accessories', component: Accessories }
+  ,{ path: '/profile/account', component: AccountDetails }
 ]
 
 const router = createRouter({

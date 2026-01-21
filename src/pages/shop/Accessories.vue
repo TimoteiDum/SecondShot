@@ -10,4 +10,6 @@
 
 <script setup>
 
+defineOptions({ name: 'AccessoriesPage' })
+// placeholder static page for accessories
 </script>

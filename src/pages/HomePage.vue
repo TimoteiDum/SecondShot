@@ -58,6 +58,7 @@
 </template>
 
 <script setup>
+defineOptions({ name: 'HomePage' })
 import { ref, computed, onMounted } from 'vue'
 import LoginModal from '../pages/LoginModal.vue'
 import Modal from '@/components/layout/Modal.vue'
@@ -108,7 +109,7 @@ onMounted(() => {
       delete q.openLogin
       router.replace({ path: route.path, query: q })
     }
-  } catch (e) {
+  } catch {
     // ignore
   }
 })
@@ -124,7 +125,7 @@ watch(() => route.query.openLogin, (open) => {
       delete q.openLogin
       router.replace({ path: route.path, query: q })
     }
-  } catch (e) {
+  } catch {
     // ignore
   }
 })
@@ -139,7 +140,7 @@ storageHandler = (e) => {
 window.addEventListener('storage', storageHandler)
 
 // Watch local isAuthenticated to do any side-effects (placeholder)
-watch(isAuthenticated, (val) => {
+watch(isAuthenticated, () => {
   // Example side-effect: log or trigger UI refresh
   // console.log('auth changed', val)
 }, { immediate: false })

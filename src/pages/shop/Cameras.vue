@@ -5,29 +5,20 @@
 
     <main class="min-h-screen pt-24 px-6 cameras-hero-bg">
       <div class="max-w-4xl mx-auto py-8 relative z-10">
-        <div class="mb-6">
-          <h1 class="text-4xl font-extrabold">Cameras</h1>
-          <p class="text-gray-400 mt-2">Browse cameras available for sale.</p>
+        <div class="mb-6 text-center">
+          <h1 class="text-5xl sm:text-6xl font-extrabold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 drop-shadow-lg">
+            Cameras
+          </h1>
+          <p class="mt-3 text-lg sm:text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-orange-300 via-orange-500 to-red-500/90">
+            Browse cameras available for sale.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 items-stretch">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           <ProductCard v-for="product in cameras" :key="product.id" :product="product" @add-to-cart="addToCart" @view-details="viewDetails" />
         </div>
 
-        <!-- premium toast shown when product added -->
-        <transition name="toast">
-          <div v-if="showToast" class="fixed left-1/2 top-6 transform -translate-x-1/2 z-[9999] pointer-events-none px-4">
-            <div class="pointer-events-auto inline-flex items-center gap-4 bg-white/6 backdrop-blur-lg border border-white/10 rounded-full px-5 py-3 shadow-2xl">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 flex items-center justify-center text-white">
-                <i class="bi bi-cart-check-fill"></i>
-              </div>
-              <div class="text-left">
-                <div class="text-sm text-gray-200">Added to cart</div>
-                <div class="text-white font-semibold">{{ lastAddedTitle }}</div>
-              </div>
-            </div>
-          </div>
-        </transition>
+        <!-- toast is handled globally in TopNavBar -->
 
         <!-- details modal (animated) -->
         <transition name="dialog">
@@ -36,7 +27,7 @@
             <div class="absolute inset-0 glassy-overlay" @click="closeDetails"></div>
             <div class="relative details-modal max-w-2xl w-full z-20 text-white">
               <div class="flex items-start gap-4">
-                <img :src="lastViewedProduct.image || '/camera.jpg'" alt="" class="w-48 h-36 object-cover rounded-md" />
+                <img :src="lastViewedProduct.image || '/camera.jpg'" alt="" class="w-40 h-28 object-contain object-center rounded-md bg-black/6 p-1" />
                 <div class="flex-1">
                   <h3 class="text-2xl font-bold">{{ lastViewedProduct.title }}</h3>
                   <p class="text-gray-300 mt-2">{{ lastViewedProduct.description }}</p>
@@ -58,6 +49,7 @@
 </template>
 
 <script setup>
+defineOptions({ name: 'CamerasPage' })
 import { computed, onMounted, ref, watch } from 'vue'
 import { useProductsStore } from '@/stores/products'
 import { useCartStore } from '@/stores/cart'
@@ -77,7 +69,7 @@ onMounted(async () => {
   // always refresh sample products on mount to pick up any runtime changes (e.g. updated image paths)
   try {
     await products.fetchProducts()
-  } catch (e) {
+  } catch {
     // ignore fetch errors
   }
 })
@@ -96,10 +88,7 @@ function openLogin() {
   if (ui && ui.openLogin) ui.openLogin()
 }
 
-// friendly confirmation state when a product is added
-const lastAddedTitle = ref('')
-const showToast = ref(false)
-let toastTimer = null
+// toast handled by ui store (global)
 
 // details modal state
 const showDetails = ref(false)
@@ -107,15 +96,8 @@ const lastViewedProduct = ref({})
 
 function addToCart(p) {
   cart.addItem({ id: p.id, title: p.title, price: p.price, qty: 1 })
-  // show premium toast
-  lastAddedTitle.value = p.title
-  showToast.value = true
-  if (toastTimer) clearTimeout(toastTimer)
-  toastTimer = setTimeout(() => {
-    showToast.value = false
-    lastAddedTitle.value = ''
-    toastTimer = null
-  }, 2500)
+  // show global toast via ui store (TopNavBar displays it)
+  try { ui.showToast(p && p.title ? p.title : '') } catch (e) { /* ignore */ }
 }
 
 function viewDetails(p) {
@@ -138,7 +120,7 @@ watch(cameras, (val) => {
 
 // watch cart items for debugging or future analytics
 watch(() => cart.items.length, (n) => {
-  // eslint-disable-next-line no-console
+   
   console.log('Cart now has', n, 'items')
 })
 

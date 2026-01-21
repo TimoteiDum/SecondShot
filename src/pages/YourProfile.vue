@@ -119,7 +119,7 @@ onMounted(() => {
     if (route.query && route.query.tab) {
       active.value = route.query.tab
     }
-  } catch (e) {
+  } catch {
     // ignore
   }
 })
@@ -129,7 +129,7 @@ watch(active, (name) => {
   try {
     const q = { ...route.query, tab: name }
     router.replace({ path: route.path, query: q })
-  } catch (e) {
+  } catch {
     // ignore
   }
 })
@@ -148,7 +148,7 @@ function handleLogout() {
   if (!ok) return
   try {
     auth.logout()
-  } catch (e) {
+  } catch {
     // ignore
   }
   // navigate to the app base (forces a full reload and avoids router push/race)

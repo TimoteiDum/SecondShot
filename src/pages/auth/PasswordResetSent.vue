@@ -25,7 +25,6 @@
 </template>
 
 <script setup>
-defineOptions({ name: 'PasswordResetSentPage' })
 import ButtonComponent from '@/components/buttons/ButtonComponent.vue'
 import CardComponent from '@/components/layout/CardComponent.vue'
 import LabelText from '@/components/layout/LabelText.vue'

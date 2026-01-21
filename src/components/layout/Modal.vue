@@ -10,7 +10,8 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineOptions({ name: 'ModalPanel' })
+defineProps({
   modelValue: { type: Boolean, default: false }
 })
 const emit = defineEmits(['update:modelValue', 'close'])

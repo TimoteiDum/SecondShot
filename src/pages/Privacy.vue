@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+defineOptions({ name: 'PrivacyPage' })
 // simple static page
 </script>
 

@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   title: String,
   subtitle: { type: String, default: '' },
   to: { type: [String, Object], required: true },

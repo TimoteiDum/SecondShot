@@ -10,4 +10,6 @@
 
 <script setup>
 
+defineOptions({ name: 'VideoCamerasPage' })
+// placeholder static page for video cameras
 </script>

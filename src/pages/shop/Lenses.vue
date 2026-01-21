@@ -10,4 +10,6 @@
 
 <script setup>
 
+defineOptions({ name: 'LensesPage' })
+// placeholder static page for lenses
 </script>

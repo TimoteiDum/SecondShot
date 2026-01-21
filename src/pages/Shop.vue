@@ -33,6 +33,7 @@
 </template>
 
 <script setup>
+defineOptions({ name: 'ShopPage' })
 import { computed } from 'vue'
 import CategoryCard from '@/components/layout/CategoryCard.vue'
 import TopNavBar from '@/components/layout/TopNavBar.vue'

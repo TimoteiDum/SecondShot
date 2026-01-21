@@ -42,9 +42,11 @@ export const useProductsStore = defineStore('products', {
         setTimeout(() => {
           const sample = [
             { id: 101, title: 'Canon EOS R6', category: 'Cameras', price: 2499, description: 'Full-frame mirrorless with in-body image stabilization', image: '/canon.jpg' },
-            { id: 102, title: 'Sony A7 IV', category: 'Cameras', price: 1999, description: 'High-resolution full-frame mirrorless with advanced AF', image: '/camera.jpg' },
-            { id: 103, title: 'Fujifilm X-T4', category: 'Cameras', price: 1699, description: 'APS-C mirrorless with film simulation and IBIS', image: '/camera.jpg' },
+            { id: 102, title: 'Sony A7 IV', category: 'Cameras', price: 1999, description: 'High-resolution full-frame mirrorless with advanced AF', image: '/sony.jpg' },
+            { id: 103, title: 'Fujifilm X-T4', category: 'Cameras', price: 1699, description: 'APS-C mirrorless with film simulation and IBIS', image: '/fuji.jpg' },
             { id: 201, title: 'Standard Zoom 24-70mm', category: 'Lenses', price: 899, description: 'Versatile zoom for everyday shooting', image: '/downlad.jpg' }
+
+            
           ]
           this.products = sample
           resolve(sample)
@@ -53,6 +55,7 @@ export const useProductsStore = defineStore('products', {
     },
     applyFilter(f) {
       this.filter = f
+
     }
   }
 })

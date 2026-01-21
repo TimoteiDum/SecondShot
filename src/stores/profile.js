@@ -18,7 +18,7 @@ export const useProfileStore = defineStore('profile', {
       this.profile = { ...this.profile, ...payload }
       try {
         localStorage.setItem('profile', JSON.stringify(this.profile))
-      } catch (e) {
+      } catch {
         // ignore
       }
     },
@@ -26,7 +26,7 @@ export const useProfileStore = defineStore('profile', {
       try {
         const raw = localStorage.getItem('profile')
         this.profile = raw ? JSON.parse(raw) : { name: '', address: '' }
-      } catch (e) {
+      } catch {
         this.profile = { name: '', address: '' }
       }
     }

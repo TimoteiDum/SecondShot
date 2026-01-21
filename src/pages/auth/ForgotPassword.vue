@@ -32,7 +32,6 @@
 </template>
 
 <script setup>
-defineOptions({ name: 'ForgotPasswordPage' })
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import EmailInput from '@/components/inputs/EmailInput.vue'

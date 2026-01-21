@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen pt-28 px-6 cameras-hero-bg">
-    <!-- toast is handled globally in TopNavBar now -->
     <div class="max-w-6xl mx-auto text-center relative z-10">
       <h2 class="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 drop-shadow-lg">
         Search results for "{{ query }}"

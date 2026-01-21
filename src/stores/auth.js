@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = user
       try {
         localStorage.setItem('user', JSON.stringify(user))
-      } catch (e) {
+      } catch {
         // ignore
       }
     },
@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('auth', {
       this.token = null
       try {
         localStorage.removeItem('user')
-      } catch (e) {
+      } catch {
         // ignore
       }
     },
@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         const raw = localStorage.getItem('user')
         this.user = raw ? JSON.parse(raw) : null
-      } catch (e) {
+      } catch {
         this.user = null
       }
     }

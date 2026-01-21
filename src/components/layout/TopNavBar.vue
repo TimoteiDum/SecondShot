@@ -18,14 +18,31 @@
 
       <!-- right controls (edge) -->
       <div class="absolute right-6 top-1/2 -translate-y-1/2 z-30 flex items-center gap-3">
-        <router-link to="/cart" class="relative flex items-center justify-center w-14 h-14 rounded-full hover:shadow-lg transition">
+        <div class="relative"> <!-- container for cart/profile + toast (toast will be positioned relative to this) -->
+          <router-link to="/cart" class="relative flex items-center justify-center w-14 h-14 rounded-full hover:shadow-lg transition">
           <div :class="(props.theme === 'accent' ? 'w-12 h-12 bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 rounded-full flex items-center justify-center text-white shadow-sm' : 'w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-800 shadow-sm ring-1 ring-white/20') + ' cursor-pointer hover:shadow-md transition-shadow'">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 7h14l-2-7M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
             </svg>
           </div>
           <span v-if="totalItems > 0" class="absolute -top-1 -right-1 bg-red-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center">{{ totalItems }}</span>
-        </router-link>
+          </router-link>
+
+          <!-- global toast (appears to come out of the cart) -->
+          <transition name="cart-pop">
+            <div v-if="ui.toastVisible" class="absolute right-0 top-full mt-3 pointer-events-none z-[9999]">
+              <div class="pointer-events-auto inline-flex items-center gap-4 bg-white/6 backdrop-blur-lg border border-white/10 rounded-full px-4 py-2 shadow-2xl transform origin-right">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 flex items-center justify-center text-white">
+                  <i class="bi bi-cart-check-fill"></i>
+                </div>
+                <div class="text-left">
+                  <div class="text-sm text-gray-200">Added to cart</div>
+                  <div class="text-white font-semibold">{{ ui.toastTitle }}</div>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
 
         <div class="relative flex items-center justify-center w-14 h-14 rounded-full hover:shadow-lg transition">
           <router-link v-if="isAuthenticated" to="/profile" class="w-12 h-12 flex items-center justify-center" aria-label="Profile">
@@ -63,11 +80,13 @@
           </div>
         </div>
       </div>
+      
     </div>
   </header>
 </template>
 
 <script setup>
+defineOptions({ name: 'TopNavBar' })
 import { ref, watch, computed, toRef, onUnmounted } from 'vue'
 import SearchBar from '@/components/inputs/SearchBar.vue'
 import { useCartStore } from '@/stores/cart'
@@ -98,7 +117,7 @@ watch(trimmedSearch, (val) => {
   persistTimer = setTimeout(() => {
     try {
       localStorage.setItem('lastSearch', val)
-    } catch (e) {
+        } catch {
       // ignore
     }
   }, 400)
@@ -140,3 +159,18 @@ onUnmounted(() => {
   if (persistTimer) clearTimeout(persistTimer)
 })
 </script>
+
+<style scoped>
+/* toast animation for the global toast */
+.toast-enter-active, .toast-leave-active { transition: all 260ms cubic-bezier(.2,.9,.2,1); }
+.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(-6px) scale(.98); }
+.toast-enter-to, .toast-leave-from { opacity: 1; transform: translateY(0) scale(1); }
+
+/* cart-pop entrance: looks like it's popping out of the cart icon */
+.cart-pop-enter-active, .cart-pop-leave-active { transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease; }
+.cart-pop-enter-from { opacity: 0; transform: translateY(-6px) translateX(6px) scale(.6); }
+.cart-pop-enter-to { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+.cart-pop-leave-from { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+.cart-pop-leave-to { opacity: 0; transform: translateY(-6px) translateX(6px) scale(.85); }
+</style>
+

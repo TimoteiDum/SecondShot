@@ -5,6 +5,7 @@
       :placeholder="placeholder"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
+      @keydown.enter="$emit('submit', $event.target.value)"
       class="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-400 text-base"
       type="text"
     />

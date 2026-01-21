@@ -14,6 +14,7 @@ import VideoCameras from '../pages/shop/VideoCameras.vue'
 import Lenses from '../pages/shop/Lenses.vue'
 import Accessories from '../pages/shop/Accessories.vue'
 import AccountDetails from '../pages/AccountDetails.vue'
+import SearchResults from '../pages/SearchResults.vue'
 
 const routes = [
   { path: '/', component: HomePage },
@@ -35,6 +36,7 @@ const routes = [
   ,{ path: '/shop/lenses', component: Lenses }
   ,{ path: '/shop/accessories', component: Accessories }
   ,{ path: '/profile/account', component: AccountDetails }
+  ,{ path: '/search', component: SearchResults }
 ]
 
 const router = createRouter({

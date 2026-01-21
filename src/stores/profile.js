@@ -8,7 +8,10 @@ export const useProfileStore = defineStore('profile', {
     }
   }),
   getters: {
-    hasProfile: (state) => !!(state.profile && (state.profile.name || state.profile.address))
+    hasProfile: (state) => !!(state.profile && (state.profile.name || state.profile.address)),
+    fullName: (state) => (state.profile && state.profile.name ? state.profile.name : ''),
+    profileComplete: (state) => !!(state.profile && state.profile.name && state.profile.address),
+    addressLine: (state) => (state.profile && state.profile.address ? state.profile.address : '')
   },
   actions: {
     saveProfile(payload) {

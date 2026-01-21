@@ -6,7 +6,14 @@ export const useCartStore = defineStore('cart', {
   }),
   getters: {
     totalItems: (state) => state.items.reduce((s, i) => s + (i.qty || 1), 0),
-    totalPrice: (state) => state.items.reduce((s, i) => s + ((i.price || 0) * (i.qty || 1)), 0)
+    totalPrice: (state) => state.items.reduce((s, i) => s + ((i.price || 0) * (i.qty || 1)), 0),
+    hasItems: (state) => state.items.length > 0,
+    distinctCount: (state) => state.items.length,
+    subtotalFormatted: (state) => {
+      const val = state.items.reduce((s, i) => s + ((i.price || 0) * (i.qty || 1)), 0)
+      return `$${val.toFixed(2)}`
+    },
+    itemsById: (state) => (id) => state.items.find(i => i.id === id)
   },
   actions: {
     addItem(item) {

@@ -9,8 +9,29 @@ export const useProductsStore = defineStore('products', {
   }),
   getters: {
     byCategory: (state) => (cat) => state.products.filter(p => p.category === cat),
-    count: (state) => state.products.length
+    byId: (state) => (id) => state.products.find(p => p.id === id),
+    count: (state) => state.products.length,
+    uniqueCategories: (state) => Array.from(new Set(state.products.map(p => p.category).filter(Boolean))),
+    filteredProducts: (state) => {
+      if (!state.filter) return state.products
+      const normalize = (s) => (s || '').toString().toLowerCase().replace(/[^a-z0-9]+/g, ' ')
+      const f = normalize(state.filter)
+      const tokens = f.split(/\s+/).filter(Boolean)
+      if (!tokens.length) return state.products
+      return state.products.filter(p => {
+        const hay = normalize(`${p.title || ''} ${p.description || ''} ${p.category || ''}`)
+        // every token must be present somewhere in the searchable haystack
+        return tokens.every(t => hay.includes(t))
+      })
+    },
+    featured: (state) => state.products.slice(0, 4),
+    priceRange: (state) => {
+      if (!state.products.length) return { min: 0, max: 0 }
+      const prices = state.products.map(p => p.price || 0)
+      return { min: Math.min(...prices), max: Math.max(...prices) }
+    }
   },
+  
   actions: {
     setProducts(items) {
       this.products = items

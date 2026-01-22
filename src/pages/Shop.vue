@@ -1,8 +1,8 @@
 <template>
-  <!-- top navigation component (fixed) -->
-  <TopNavBar :isAuthenticated="isAuthenticated" @open-login="openLogin" @open-menu="toggleSidebar" />
+  
+  <TopNavBar :isAuthenticated="auth.isAuthenticated" @open-login="openLogin" @open-menu="toggleSidebar" />
   <SidebarMenu :show="ui.showSidebar" @close="toggleSidebar" />
-  <!-- Background image with dark overlay to make cards stand out -->
+  
   <div class="min-h-screen pt-24 px-6 bg-cover bg-center relative" style="background-image: url('/camera.jpg')">
     <div class="absolute inset-0 bg-black/60"></div>
   <div class="relative z-10 flex flex-col items-center text-center text-white pt-16 pb-28 min-h-[55vh]">
@@ -11,7 +11,7 @@
           Shop by category
         </h1>
 
-        <!-- 2x2 centered grid with larger gaps -->
+        
   <div class="mx-auto w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-y-16 gap-x-8 mt-8">
           <div class="flex justify-center">
             <CategoryCard title="Cameras" subtitle="DSLR, mirrorless & compact" :to="'/shop/cameras'" iconClass="bi bi-camera" />
@@ -34,7 +34,7 @@
 
 <script setup>
 defineOptions({ name: 'ShopPage' })
-import { computed } from 'vue'
+ 
 import CategoryCard from '@/components/layout/CategoryCard.vue'
 import TopNavBar from '@/components/layout/TopNavBar.vue'
 import SidebarMenu from '@/components/layout/SidebarMenu.vue'
@@ -44,10 +44,7 @@ import { useUIStore } from '@/stores/ui'
 const auth = useAuthStore()
 const ui = useUIStore()
 
-const isAuthenticated = computed(() => auth.isAuthenticated)
-
 function openLogin() {
-  // prefer UI action which opens the global login modal if present
   if (ui && ui.openLogin) ui.openLogin()
 }
 

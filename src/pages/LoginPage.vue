@@ -1,5 +1,5 @@
 <template>
-  <!-- Render the LoginModal inside the shared Modal wrapper so /login looks like the popup -->
+  
   <Modal v-model="show" @close="onClose">
     <LoginModal @close="onClose" />
   </Modal>
@@ -15,13 +15,11 @@ const router = useRouter()
 const show = ref(false)
 
 onMounted(() => {
-  // open the modal when the route is entered
   show.value = true
 })
 
 function onClose() {
   show.value = false
-  // navigate back to home (or previous) when modal closes
   router.push('/')
 }
 </script>

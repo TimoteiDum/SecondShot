@@ -5,28 +5,25 @@
     <div class="flex-1 relative">
       <TopNavBar
         :search="search"
-        :is-authenticated="isAuthenticated"
+        :is-authenticated="auth.isAuthenticated"
         @update:search="search = $event"
         @open-menu="showSidebar = true"
-        @open-login="openLogin"
       />
 
       <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
 
       <div class="relative z-20 flex flex-col items-center justify-start min-h-screen pt-24">
         <h1 class="baskerville text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 drop-shadow-lg text-center">
-          {{ welcomeComputed }}
+          {{ welcomeMessage || 'Welcome to SecondShot' }}
         </h1>
         <div class="flex flex-col items-center mt-40">
           <LabelText class="mb-8">
-            <!-- gradient label matching the Shop title -->
             <template #label>
               <span class="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 drop-shadow-md">
                 Buy, Sell & Trade
               </span>
             </template>
 
-            <!-- premium subtitle using default slot -->
             <template #default>
               <span class="text-xl sm:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 drop-shadow-md">
                 Quality Used Cameras & Photo Gear
@@ -50,16 +47,14 @@
         </div>
       </div>
 
-      <Modal v-model="showLogin" @close="closeLogin">
-        <LoginModal v-if="showLogin" @close="closeLogin" />
-      </Modal>
+      
     </div>
   </div>
 </template>
 
 <script setup>
 defineOptions({ name: 'HomePage' })
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import LoginModal from '../pages/LoginModal.vue'
 import Modal from '@/components/layout/Modal.vue'
 import LabelText from '@/components/layout/LabelText.vue'
@@ -76,87 +71,65 @@ const props = defineProps({
 
 const emit = defineEmits(['buy', 'sell'])
 
-const showLogin = ref(false)
+ 
 const showSidebar = ref(false)
 const search = ref('')
 const auth = useAuthStore()
-const isAuthenticated = computed(() => auth.isAuthenticated)
+// use auth.isAuthenticated directly and the welcomeMessage prop in the template
 
-const welcomeComputed = computed(() => {
-  // Always show the welcome message; do not echo the search term in the heading
-  return props.welcomeMessage || 'Welcome to SecondShot'
-})
-
-function openLogin() {
-  showLogin.value = true
-}
-function closeLogin() {
-  showLogin.value = false
-  // ensure auth store is loaded from storage (login writes through auth store)
-  auth.loadFromStorage()
-}
+ 
 
 import { useRouter, useRoute } from 'vue-router'
+import { useUIStore } from '@/stores/ui'
 const router = useRouter()
 const route = useRoute()
+const ui = useUIStore()
 
 onMounted(() => {
-  // If we arrived with ?openLogin=1 open the login modal and remove the query param
   try {
     if (route.query && route.query.openLogin) {
-      showLogin.value = true
+      if (ui && ui.openLogin) ui.openLogin()
       const q = { ...route.query }
       delete q.openLogin
       router.replace({ path: route.path, query: q })
     }
   } catch {
-    // ignore
   }
 })
 
-// Watch for route query changes to open the login modal reactively
 import { watch, onUnmounted } from 'vue'
 let storageHandler = null
 watch(() => route.query.openLogin, (open) => {
   try {
     if (open) {
-      showLogin.value = true
+      if (ui && ui.openLogin) ui.openLogin()
       const q = { ...route.query }
       delete q.openLogin
       router.replace({ path: route.path, query: q })
     }
   } catch {
-    // ignore
   }
 })
 
-// React to auth changes made in other tabs/windows and keep isAuthenticated reactive
 storageHandler = (e) => {
   if (e.key === 'user') {
-    // reload auth info in other tabs
     auth.loadFromStorage()
   }
 }
 window.addEventListener('storage', storageHandler)
 
-// Watch local isAuthenticated to do any side-effects (placeholder)
-watch(isAuthenticated, () => {
-  // Example side-effect: log or trigger UI refresh
-  // console.log('auth changed', val)
-}, { immediate: false })
+// removed unused watcher for isAuthenticated (access auth.isAuthenticated directly)
 
 onUnmounted(() => {
   if (storageHandler) window.removeEventListener('storage', storageHandler)
 })
 
 function handleBuy() {
-  // navigate to shop
   router.push('/shop')
   emit('buy')
 }
 function handleSell() {
-  // navigate to signup to encourage users to sign up before selling
-  router.push('/signup')
+  router.push('/sell')
   emit('sell')
 }
 </script>

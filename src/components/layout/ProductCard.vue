@@ -6,11 +6,10 @@
     <div class="flex items-center justify-between mt-2">
       <div class="text-2xl sm:text-3xl font-extrabold text-white">{{ formattedPrice }}</div>
       <div class="flex items-center gap-3">
-        <!-- cart icon button -->
         <button @click.prevent="$emit('add-to-cart', product)" title="Add to cart" class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 text-white shadow-md hover:scale-105 transition">
           <i class="bi bi-cart-plus-fill" aria-hidden="true"></i>
         </button>
-        <!-- details button (theme gradient for visibility) -->
+        
         <button @click.prevent="$emit('view-details', product)" title="View details" class="bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 text-white px-4 py-2 rounded-md font-medium hover:brightness-105 transition">
           Details
         </button>
@@ -28,15 +27,12 @@ const props = defineProps({
     required: true
   }
 })
-// template uses $emit directly so a local emit binding isn't required
-
+ 
 const formattedPrice = computed(() => {
   return `$${props.product.price}`
 })
 
-// watch for product changes (example of using watch in a component)
 watch(() => props.product, (newVal) => {
-  // simple debug hook - could be replaced with analytics / lazy image loading
   console.log('Product changed:', newVal && newVal.id)
 })
 </script>

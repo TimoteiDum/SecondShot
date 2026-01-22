@@ -38,18 +38,14 @@ function handleSignup() {
   alertMessage.value = 'Account created!'
   showAlert.value = true
   emit('signupSuccess', { fullName: fullName.value, email: email.value })
-  // after successful signup navigate home and open the login modal
   router.push({ path: '/', query: { openLogin: '1' } })
 }
 
-// Computed validations
-const passwordsMatch = computed(() => password.value === confirmPassword.value)
-const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
 const isFormValid = computed(() =>
   fullName.value.trim().length >= 3 &&
-  isEmailValid.value &&
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value) &&
   password.value.length >= 6 &&
-  passwordsMatch.value &&
+  (password.value === confirmPassword.value) &&
   agreed.value
 )
 </script>
@@ -77,7 +73,7 @@ const isFormValid = computed(() =>
         <ButtonComponent :disabled="!isFormValid" type="submit" customClass="mt-2">
           Create an account
         </ButtonComponent>
-        <small v-if="!passwordsMatch && (password.length || confirmPassword.length)" class="text-red-500 text-sm mt-1">Passwords do not match</small>
+  <small v-if="password !== confirmPassword && (password.length || confirmPassword.length)" class="text-red-500 text-sm mt-1">Passwords do not match</small>
       </form>
     </div>
   </div>

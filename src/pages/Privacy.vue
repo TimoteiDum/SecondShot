@@ -12,7 +12,6 @@
 
 <script setup>
 defineOptions({ name: 'PrivacyPage' })
-// simple static page
 </script>
 
 <style scoped>

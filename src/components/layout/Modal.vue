@@ -2,7 +2,7 @@
   <transition name="modal" appear>
     <div v-if="modelValue" class="fixed inset-0 z-50 flex items-center justify-center">
       <div class="absolute inset-0 bg-black/50" @click="emitClose"></div>
-      <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-8 relative modal-panel">
+      <div :class="['modal-panel', variant === 'glassy' ? 'modal-glassy' : 'modal-default']">
         <slot />
       </div>
     </div>
@@ -12,7 +12,8 @@
 <script setup>
 defineOptions({ name: 'ModalPanel' })
 defineProps({
-  modelValue: { type: Boolean, default: false }
+  modelValue: { type: Boolean, default: false },
+  variant: { type: String, default: 'default' }
 })
 const emit = defineEmits(['update:modelValue', 'close'])
 function emitClose() {
@@ -22,7 +23,6 @@ function emitClose() {
 </script>
 
 <style scoped>
-/* Modal transition: fade backdrop + pop dialog */
 .modal-enter-active, .modal-leave-active {
   transition: opacity 180ms ease-out;
 }
@@ -33,7 +33,6 @@ function emitClose() {
   opacity: 1;
 }
 
-/* animate the inner panel for a pop effect */
 .modal-enter-active .modal-panel, .modal-leave-active .modal-panel {
   transition: transform 200ms cubic-bezier(.2,.9,.3,1), opacity 180ms ease-out;
 }
@@ -53,4 +52,29 @@ function emitClose() {
   transform: translateY(-6px) scale(0.96);
   opacity: 0;
 }
+
+.modal-default {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 40px rgba(2,6,23,0.2);
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem;
+}
+
+.modal-glassy {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 10px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem;
+  color: #eef2ff;
+}
+
+.modal-glassy .text-muted { color: rgba(255,255,255,0.72); }
+.modal-glassy a { color: #c7b3ff; }
 </style>

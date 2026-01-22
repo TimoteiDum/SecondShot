@@ -7,7 +7,6 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 
 export default defineConfig(({ mode }) => ({
-  // Use a different base for production GitHub Pages deployment
   base: mode === 'production' ? '/SecondShot/' : '/',
   plugins: [
     vue(),

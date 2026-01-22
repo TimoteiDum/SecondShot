@@ -17,7 +17,6 @@ export const useUIStore = defineStore('ui', {
     closeLogin() { this.showLogin = false },
     toggleSidebar() { this.showSidebar = !this.showSidebar }
     ,
-    // show a transient toast with a title (auto-hide after timeout)
     showToast(title = '', ms = 2500) {
       this.toastTitle = title || ''
       this.toastVisible = true

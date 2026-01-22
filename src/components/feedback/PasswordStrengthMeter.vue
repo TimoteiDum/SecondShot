@@ -2,13 +2,13 @@
   <div class="w-full mt-2">
     <div class="h-2 rounded bg-gray-200 overflow-hidden">
       <div
-        :class="barClass"
-        :style="{ width: strengthPercent + '%' }"
+        :class="metrics.barClass"
+        :style="{ width: metrics.percent + '%' }"
         class="h-2 transition-all duration-300"
       ></div>
     </div>
-    <div class="text-xs mt-1 font-semibold" :class="textClass">
-      {{ strengthLabel }}
+    <div class="text-xs mt-1 font-semibold" :class="metrics.textClass">
+      {{ metrics.label }}
     </div>
   </div>
 </template>
@@ -16,49 +16,38 @@
 <script setup>
 import { computed } from 'vue'
 
-const props = defineProps({
-  password: { type: String, required: true }
-})
+const props = defineProps({ password: { type: String, required: true } })
 
-const strength = computed(() => {
-  const pwd = props.password
+const metrics = computed(() => {
+  const pwd = props.password || ''
   let score = 0
   if (pwd.length >= 8) score++
   if (/[A-Z]/.test(pwd)) score++
   if (/[0-9]/.test(pwd)) score++
   if (/[^A-Za-z0-9]/.test(pwd)) score++
-  return score
-})
 
-const strengthPercent = computed(() => [0, 33, 66, 100][strength.value])
-const strengthLabel = computed(() => {
-  switch (strength.value) {
-    case 0: return 'Too short'
-    case 1: return 'Weak'
-    case 2: return 'Medium'
-    case 3: return 'Strong'
-    case 4: return 'Very strong'
-    default: return ''
+  const percent = [0, 33, 66, 100, 100][score]
+
+  let label = ''
+  switch (score) {
+    case 0: label = 'Too short'; break
+    case 1: label = 'Weak'; break
+    case 2: label = 'Medium'; break
+    case 3: label = 'Strong'; break
+    case 4: label = 'Very strong'; break
+    default: label = ''
   }
-})
-const barClass = computed(() => {
-  switch (strength.value) {
-    case 0: return 'bg-gray-300'
-    case 1: return 'bg-red-500'
-    case 2: return 'bg-yellow-400'
-    case 3: return 'bg-green-500'
-    case 4: return 'bg-blue-600'
-    default: return 'bg-gray-300'
+
+  let barClass = 'bg-gray-300'
+  let textClass = 'text-gray-400'
+  switch (score) {
+    case 0: barClass = 'bg-gray-300'; textClass = 'text-gray-400'; break
+    case 1: barClass = 'bg-red-500'; textClass = 'text-red-500'; break
+    case 2: barClass = 'bg-yellow-400'; textClass = 'text-yellow-600'; break
+    case 3: barClass = 'bg-green-500'; textClass = 'text-green-600'; break
+    case 4: barClass = 'bg-blue-600'; textClass = 'text-blue-600'; break
   }
-})
-const textClass = computed(() => {
-  switch (strength.value) {
-    case 0: return 'text-gray-400'
-    case 1: return 'text-red-500'
-    case 2: return 'text-yellow-600'
-    case 3: return 'text-green-600'
-    case 4: return 'text-blue-600'
-    default: return 'text-gray-400'
-  }
+
+  return { percent, label, barClass, textClass }
 })
 </script>

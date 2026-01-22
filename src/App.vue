@@ -1,6 +1,6 @@
 <template>
   <router-view />
-  <Modal v-model="showLogin" @close="handleClose">
+  <Modal v-model="showLogin" variant="glassy" @close="handleClose">
     <LoginModal @close="handleClose" />
   </Modal>
 </template>

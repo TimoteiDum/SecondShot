@@ -40,14 +40,12 @@ const success = ref(false)
 let autosaveTimer = null
 
 onMounted(() => {
-  // get email from auth store if available
   try {
     auth.loadFromStorage()
     email.value = auth.user && auth.user.email ? auth.user.email : ''
   } catch {
     email.value = ''
   }
-  // load from profile store first
   try {
     profile.loadProfile()
     if (profile.profile) {
@@ -55,7 +53,6 @@ onMounted(() => {
       form.value.address = profile.profile.address || ''
     }
   } catch {
-    // fallback to localStorage
     try {
       const rawProfile = localStorage.getItem('profile')
       const p = rawProfile ? JSON.parse(rawProfile) : null
@@ -64,19 +61,16 @@ onMounted(() => {
         form.value.address = p.address || ''
       }
     } catch {
-      // ignore
     }
   }
 })
 
-// Autosave the profile form to localStorage (debounced)
 watch(form, (newVal) => {
   clearTimeout(autosaveTimer)
   autosaveTimer = setTimeout(() => {
     try {
       localStorage.setItem('profile', JSON.stringify(newVal))
     } catch {
-      // ignore storage errors
     }
   }, 700)
 }, { deep: true })
@@ -88,17 +82,14 @@ onUnmounted(() => {
 function save() {
   try {
     const payload = { name: form.value.name, address: form.value.address }
-    // write through profile store when available
     try {
       profile.saveProfile(payload)
     } catch {
-      // fallback to localStorage
       localStorage.setItem('profile', JSON.stringify(payload))
     }
     success.value = true
     setTimeout(() => (success.value = false), 2500)
   } catch {
-    // ignore
   }
 }
 </script>

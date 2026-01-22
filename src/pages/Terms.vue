@@ -12,7 +12,6 @@
 
 <script setup>
 defineOptions({ name: 'TermsPage' })
-// simple static page
 </script>
 
 <style scoped>

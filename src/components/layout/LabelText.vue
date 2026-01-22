@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col items-center mb-2">
     <label class="text-2xl text-gray-300 font-bold text-center mb-1">
-      <!-- allow overriding the label via a named slot -->
       <slot name="label">{{ label }}</slot>
     </label>
     <p class="text-lg text-gray-300 text-center">

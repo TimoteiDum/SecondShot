@@ -1,6 +1,6 @@
 <template>
   <div class="cameras-page">
-    <TopNavBar :isAuthenticated="isAuthenticated" theme="accent" @open-menu="toggleSidebar" @open-login="openLogin" />
+  <TopNavBar :isAuthenticated="auth.isAuthenticated" theme="accent" @open-menu="toggleSidebar" @open-login="openLogin" />
     <SidebarMenu :show="ui.showSidebar" @close="toggleSidebar" />
 
     <main class="min-h-screen pt-24 px-6 cameras-hero-bg">
@@ -15,15 +15,14 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          <ProductCard v-for="product in cameras" :key="product.id" :product="product" @add-to-cart="addToCart" @view-details="viewDetails" />
+          <ProductCard v-for="product in products.byCategory('Cameras').slice(0, 3)" :key="product.id" :product="product" @add-to-cart="addToCart" @view-details="viewDetails" />
         </div>
 
-        <!-- toast is handled globally in TopNavBar -->
-
-        <!-- details modal (animated) -->
+        
+        
         <transition name="dialog">
           <div v-if="showDetails" class="fixed inset-0 z-60 flex items-center justify-center px-4">
-            <!-- glassy overlay: frosted backdrop similar to SidebarMenu panel -->
+            
             <div class="absolute inset-0 glassy-overlay" @click="closeDetails"></div>
             <div class="relative details-modal max-w-2xl w-full z-20 text-white">
               <div class="flex items-start gap-4">
@@ -64,20 +63,14 @@ const cart = useCartStore()
 const auth = useAuthStore()
 const ui = useUIStore()
 
-// ensure sample products are loaded (fetchProducts simulates an async fetch)
 onMounted(async () => {
-  // always refresh sample products on mount to pick up any runtime changes (e.g. updated image paths)
   try {
     await products.fetchProducts()
   } catch {
-    // ignore fetch errors
   }
 })
 
-// computed view of first 3 camera products
-const cameras = computed(() => products.byCategory('Cameras').slice(0, 3))
-
-const isAuthenticated = computed(() => auth.isAuthenticated)
+// use products.byCategory(...) and auth.isAuthenticated directly to avoid extra computed
 
 function toggleSidebar() {
   if (ui && ui.toggleSidebar) ui.toggleSidebar()
@@ -88,16 +81,12 @@ function openLogin() {
   if (ui && ui.openLogin) ui.openLogin()
 }
 
-// toast handled by ui store (global)
-
-// details modal state
 const showDetails = ref(false)
 const lastViewedProduct = ref({})
 
 function addToCart(p) {
   cart.addItem({ id: p.id, title: p.title, price: p.price, qty: 1 })
-  // show global toast via ui store (TopNavBar displays it)
-  try { ui.showToast(p && p.title ? p.title : '') } catch (e) { /* ignore */ }
+  try { ui.showToast(p && p.title ? p.title : '') } catch (e) { }
 }
 
 function viewDetails(p) {
@@ -110,21 +99,17 @@ function closeDetails() {
   lastViewedProduct.value = {}
 }
 
-// watch cameras list for changes (example of watch usage)
-watch(cameras, (val) => {
-  // if no cameras are present, attempt to fetch products again
+watch(() => products.byCategory('Cameras'), (val) => {
   if (!val || val.length === 0) {
     products.fetchProducts().catch(() => {})
   }
 })
 
-// watch cart items for debugging or future analytics
 watch(() => cart.items.length, (n) => {
-   
   console.log('Cart now has', n, 'items')
 })
 
-// imported ProductCard is available to the template in <script setup>
+ 
 </script>
 
 <style scoped>
@@ -140,20 +125,16 @@ watch(() => cart.items.length, (n) => {
   transform: translateY(0) scale(1);
 }
 
-/* toast animation */
 .toast-enter-active, .toast-leave-active { transition: all 260ms cubic-bezier(.2,.9,.2,1); }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(-6px) scale(.98); }
 .toast-enter-to, .toast-leave-from { opacity: 1; transform: translateY(0) scale(1); }
 
-/* glassy orange premium background for cameras page */
 .cameras-hero-bg {
   position: relative;
   overflow: hidden;
-  /* use the same orange→red theme as the buttons but semi-transparent for a glassy look */
   background: linear-gradient(90deg, rgba(251,146,60,0.14) 0%, rgba(249,115,22,0.12) 50%, rgba(220,38,38,0.12) 100%);
 }
 .cameras-hero-bg::before {
-  /* blurred gradient glows matching the theme colors */
   content: '';
   position: absolute;
   inset: -25% -20% -30% -20%;
@@ -165,7 +146,6 @@ watch(() => cart.items.length, (n) => {
   z-index: 0;
 }
 .cameras-hero-bg::after {
-  /* subtle glass overlay to mute and add contrast */
   content: '';
   position: absolute;
   inset: 0;
@@ -174,15 +154,11 @@ watch(() => cart.items.length, (n) => {
   z-index: 1;
 }
 
-/* make page content sit above the blurred glow */
 .cameras-hero-bg > .max-w-4xl { z-index: 10; position: relative; }
 
-/* ensure translucent cards remain readable with a slightly darker tint */
 .cameras-hero-bg .bg-white\/6 { background-color: rgba(10,8,6,0.12) !important; border: 1px solid rgba(255,255,255,0.04); }
 
-/* glassy overlay and modal styling to match SidebarMenu look */
 .glassy-overlay {
-  /* stronger opaque tint + blur so underlying text is not readable */
   background: linear-gradient(180deg, rgba(6,6,6,0.72), rgba(12,12,12,0.66));
   -webkit-backdrop-filter: blur(18px) saturate(120%);
   backdrop-filter: blur(18px) saturate(120%);

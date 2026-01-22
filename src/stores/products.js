@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 export const useProductsStore = defineStore('products', {
   state: () => ({
     products: [],
-    // seed with a few sample products (three cameras) so pages can render immediately
     categories: ['Cameras','Video Cameras','Lenses','Accessories'],
     filter: null
   }),
@@ -20,7 +19,6 @@ export const useProductsStore = defineStore('products', {
       if (!tokens.length) return state.products
       return state.products.filter(p => {
         const hay = normalize(`${p.title || ''} ${p.description || ''} ${p.category || ''}`)
-        // every token must be present somewhere in the searchable haystack
         return tokens.every(t => hay.includes(t))
       })
     },
@@ -37,7 +35,6 @@ export const useProductsStore = defineStore('products', {
       this.products = items
     },
     async fetchProducts() {
-      // placeholder: simulate async fetch
       return new Promise((resolve) => {
         setTimeout(() => {
           const sample = [

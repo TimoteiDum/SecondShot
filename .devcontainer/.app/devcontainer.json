@@ -1,0 +1,36 @@
+{
+    "name": "TaskProject App Dev Container",
+    "remoteUser": "node",
+    "dockerComposeFile": "../../compose.yaml",
+    "service": "app",
+    "runServices": [
+        "app",
+        "api"
+    ],
+    "workspaceFolder": "/task",
+    "forwardPorts": [
+        5173,
+        3000
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "arcanis.vscode-zipfs"
+            ],
+            "settings": {
+                "editor.formatOnSave": true,
+                "editor.defaultFormatter": "esbenp.prettier-vscode",
+                "editor.codeActionsOnSave": {
+                    "source.fixAll": "always",
+                    "source.fixAll.eslint": "always"
+                }
+            }
+        }
+    },
+    "containerEnv": {
+        "COREPACK_ENABLE_DOWNLOAD_PROMPT": "0"
+    },
+    "postCreateCommand": "sh -lc 'if [ -f /task/app/package.json ]; then cd /task/app && yarn install; fi; if [ -f /task/api/package.json ]; then cd /task/api && yarn install; fi'"
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Api",
+    "dockerComposeFile": "../../compose.yaml",
+    "service": "api",
+    "workspaceFolder": "/task"
+}
